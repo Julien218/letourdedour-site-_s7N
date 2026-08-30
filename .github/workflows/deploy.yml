@@ -1,0 +1,34 @@
+name: 🚀 Deploy — Le Tour de Dour (Railway)
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: 🚀 Deploy to Railway
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Checkout
+        uses: actions/checkout@v4
+
+      - name: 🚀 Install Railway CLI
+        run: npm install -g @railway/cli
+
+      - name: 🚀 Deploy to Railway
+        # Attend la fin du build : un workflow vert signifie désormais que
+        # la nouvelle version est réellement disponible, pas seulement envoyée.
+        run: railway up --ci --service letourdedour-site
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+
+      - name: 🔎 Verify Railway target
+        run: |
+          railway status --json
+          railway domain list --service letourdedour-site --json
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+
+      - name: ✅ Done
+        run: echo "✨ letourdedour.com déployé — JS-Innov.IA"
