@@ -15,9 +15,16 @@
     :root{--yellow:#f6c928;--blue:#123f5b;--ink:#082638;--paper:#fffdf3;--muted:#64727a;--line:#e8dfb7;--ok:#18784d;--err:#b62f38}
     *{box-sizing:border-box}
     html,body{margin:0;min-height:100%;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--ink)}
-    body{min-height:100dvh;background:#081e2c url('/assets/mascotte-stade.webp') center/cover fixed no-repeat}
+    body{min-height:100dvh;background:#081e2c url('/assets/canari-officiel.png') center 38%/cover fixed no-repeat}
     body::before{content:"";position:fixed;inset:0;background:linear-gradient(145deg,rgba(8,38,56,.84),rgba(8,38,56,.55));backdrop-filter:blur(8px)}
-    .modal-layer{position:relative;z-index:1;min-height:100dvh;display:grid;place-items:center;padding:20px}
+    .mini-scene{position:fixed;z-index:1;inset:0;pointer-events:none;background:url('/assets/canari-mini-moi.png') center/1100px auto no-repeat;filter:drop-shadow(0 14px 24px rgba(0,0,0,.3))}
+    .postits{position:fixed;z-index:2;inset:0;pointer-events:none}
+    .postit{position:absolute;min-width:92px;padding:18px 12px 13px;text-align:center;color:#17202a;background:#f6c928;box-shadow:0 12px 25px rgba(0,0,0,.28);font:800 1rem/1.05 "Comic Sans MS","Segoe Print",cursive;transform:rotate(-6deg)}
+    .postit::before{content:"";position:absolute;top:-7px;left:50%;width:34px;height:14px;transform:translateX(-50%);background:rgba(230,220,184,.72);box-shadow:0 1px 2px rgba(0,0,0,.15)}
+    .postit:nth-child(1){left:4%;top:10%;background:#f6c928}.postit:nth-child(2){right:5%;top:9%;background:#ef8297;transform:rotate(7deg)}
+    .postit:nth-child(3){left:7%;bottom:12%;background:#59b9d9;transform:rotate(5deg)}.postit:nth-child(4){right:6%;bottom:10%;background:#b8cf32;transform:rotate(-7deg)}
+    .postit:nth-child(5){left:18%;top:48%;background:#ef8297;transform:rotate(-10deg)}.postit:nth-child(6){right:18%;top:50%;background:#f2a92f;transform:rotate(9deg)}
+    .modal-layer{position:relative;z-index:3;min-height:100dvh;display:grid;place-items:center;padding:20px}
     .dialog{position:relative;width:min(100%,430px);max-height:calc(100dvh - 40px);overflow:auto;background:var(--paper);border:1px solid rgba(255,255,255,.65);border-radius:26px;box-shadow:0 28px 90px rgba(0,0,0,.48);padding:22px;animation:pop .2s ease-out}
     @keyframes pop{from{opacity:0;transform:translateY(12px) scale(.98)}to{opacity:1;transform:none}}
     .close{position:absolute;right:14px;top:14px;width:38px;height:38px;display:grid;place-items:center;border:0;border-radius:50%;background:#eef0e8;color:var(--ink);font-size:24px;line-height:1;text-decoration:none;box-shadow:none}
@@ -41,11 +48,14 @@
     .after{display:none;text-align:center;padding:16px 3px 8px}.after.show{display:block}.after .big{font-size:44px}.after h2{margin:3px 0 5px;color:var(--blue);font-size:1.45rem}.after p{margin:0;color:var(--muted);line-height:1.45}
     .fine{text-align:center;color:#7d765d;font-size:.64rem;margin-top:10px}
     .honey{position:absolute;left:-10000px}
-    @media(max-width:600px){.modal-layer{align-items:end;padding:0}.dialog{width:100%;max-height:92dvh;border-radius:24px 24px 0 0;padding:20px 18px calc(18px + env(safe-area-inset-bottom))}.head{padding-bottom:12px}}
+    @media(max-width:900px){.mini-scene{background-size:860px auto;background-position:center 4vh}.postit{min-width:72px;padding:14px 8px 10px;font-size:.78rem}.postit:nth-child(5),.postit:nth-child(6){display:none}}
+    @media(max-width:600px){body{background-position:center top}.mini-scene{background-size:720px auto;background-position:center -2vh;opacity:.9}.postit:nth-child(1){left:3%;top:8%}.postit:nth-child(2){right:3%;top:14%}.postit:nth-child(3),.postit:nth-child(4){display:none}.modal-layer{align-items:end;padding:0}.dialog{width:100%;max-height:88dvh;border-radius:24px 24px 0 0;padding:20px 18px calc(18px + env(safe-area-inset-bottom))}.head{padding-bottom:12px}}
     @media(prefers-reduced-motion:reduce){.dialog{animation:none}}
   </style>
 </head>
 <body>
+  <div class="mini-scene" aria-hidden="true"></div>
+  <div class="postits" aria-hidden="true"><span class="postit">COCO ☺</span><span class="postit">PÉPITO ♛</span><span class="postit">LÉO ★</span><span class="postit">PLUME ✦</span><span class="postit">DOURY ?</span><span class="postit">TON IDÉE ♥</span></div>
   <main class="modal-layer">
     <section class="dialog" role="dialog" aria-modal="true" aria-labelledby="dialogTitle">
       <a class="close" href="/canari" aria-label="Fermer le formulaire">×</a>
