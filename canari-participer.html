@@ -1,1 +1,73 @@
-<!doctype html><html lang="fr-BE"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Donnez-moi un prénom ! — Le Tour de Dour</title><meta name="description" content="Proposez le prénom du Canari du Tour de Dour en quelques secondes."><meta property="og:type" content="website"><meta property="og:url" content="https://www.letourdedour.com/canari/participer"><meta property="og:title" content="🐤 Donnez-moi un prénom !"><meta property="og:description" content="Quel prénom donneriez-vous au Canari du Tour de Dour ?"><meta property="og:image" content="https://www.letourdedour.com/assets/mascotte-stade.webp"><meta name="theme-color" content="#f6c928"><style>:root{--yellow:#f6c928;--yellow2:#ffe66a;--blue:#123f5b;--blue2:#082638;--white:#fffdf3;--muted:#64727a;--line:#e8dfb7;--ok:#18784d;--err:#b62f38}*{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:start center;background:linear-gradient(180deg,var(--yellow) 0 128px,#fff9dd 128px 100%);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--blue2)}.wrap{width:min(calc(100% - 24px),470px);padding:26px 0 32px}.head{text-align:center;margin-bottom:18px}.mark{width:54px;height:54px;margin:auto;display:grid;place-items:center;border-radius:50%;background:var(--blue);color:var(--yellow);font-size:29px;border:3px solid rgba(255,255,255,.65)}.head h1{margin:10px 0 3px;font-size:1.65rem;line-height:1}.head p{margin:0;font-size:.86rem;font-weight:700;color:var(--blue)}.card{background:var(--white);border:1px solid rgba(18,63,91,.12);border-radius:24px;padding:20px;box-shadow:0 18px 50px rgba(8,38,56,.13)}label{display:block;font-weight:850;margin:0 0 7px}.req{color:#b62f38}.input{width:100%;height:58px;border:2px solid var(--line);border-radius:15px;background:#fff;color:var(--blue2);padding:0 15px;font-size:18px;outline:none}.input:focus{border-color:var(--yellow);box-shadow:0 0 0 4px rgba(246,201,40,.2)}.field{margin-bottom:15px}.hint{font-size:.73rem;color:var(--muted);margin-top:5px}.consent{display:flex;align-items:flex-start;gap:9px;font-size:.75rem;color:var(--muted);font-weight:500;margin:5px 0 16px}.consent input{width:18px;height:18px;margin:1px 0 0;accent-color:var(--blue);flex:0 0 auto}button{width:100%;min-height:56px;border:0;border-radius:15px;background:var(--blue);color:#fff;font-size:.96rem;font-weight:900;letter-spacing:.02em;cursor:pointer;box-shadow:0 8px 20px rgba(18,63,91,.18)}button:disabled{opacity:.55}.msg{text-align:center;min-height:20px;margin-top:10px;font-size:.82rem;font-weight:700}.err{color:var(--err)}.ok{color:var(--ok)}.count{text-align:center;color:var(--muted);font-size:.74rem;margin-top:10px}.count strong{color:var(--blue);font-size:.9rem}.after{display:none;text-align:center;padding:16px 3px 8px}.after.show{display:block}.after .big{font-size:48px}.after h2{margin:3px 0 5px;color:var(--blue);font-size:1.65rem}.after p{margin:0;color:var(--muted);line-height:1.5}.fine{text-align:center;color:#7d765d;font-size:.66rem;margin-top:12px}.honey{position:absolute;left:-10000px}@media(max-width:350px){.wrap{width:calc(100% - 16px)}.card{padding:16px}.head h1{font-size:1.45rem}}</style></head><body><main class="wrap"><header class="head"><div class="mark" aria-hidden="true">🐤</div><h1>Donnez-moi un prénom !</h1><p>Le Canari du Tour de Dour compte sur vous.</p></header><section class="card"><form id="nameForm"><div class="field"><label for="suggested_name">Prénom proposé <span class="req">*</span></label><input class="input" id="suggested_name" name="suggested_name" maxlength="40" required autocomplete="off" placeholder="Votre idée…"><div class="hint">40 caractères maximum</div></div><div class="field"><label for="display_name">Votre prénom <span class="hint">(facultatif)</span></label><input class="input" id="display_name" name="display_name" maxlength="80" autocomplete="name" placeholder="Comment vous appelez-vous ?"></div><div class="honey" aria-hidden="true"><input name="website" tabindex="-1" autocomplete="off"></div><label class="consent"><input type="checkbox" id="consent" required><span>J'accepte que ma proposition soit enregistrée et modérée dans le cadre du choix du prénom de la mascotte.</span></label><button id="submitBtn" type="submit">ENVOYER MA PROPOSITION →</button><div class="msg" id="msg" role="status" aria-live="polite"></div><div class="count"><strong id="count">—</strong> propositions reçues</div></form><div class="after" id="after"><div class="big">🐤</div><h2>Merci !</h2><p>Votre proposition est enregistrée.<br>Dour choisira bientôt mon prénom.</p></div></section><div class="fine">Le Tour de Dour · Les propositions ne sont jamais publiées automatiquement.</div></main><script>const API='/api/mascotte-suggestions',form=document.getElementById('nameForm'),msg=document.getElementById('msg'),count=document.getElementById('count'),btn=document.getElementById('submitBtn');async function loadCount(){try{const r=await fetch(API,{cache:'no-store'}),d=await r.json();count.textContent=d.ok?Number(d.count)||0:'—'}catch(e){count.textContent='—'}}loadCount();form.addEventListener('submit',async e=>{e.preventDefault();msg.className='msg';msg.textContent='';const name=form.suggested_name.value.trim();if(!name){msg.className='msg err';msg.textContent='Indiquez le prénom que vous proposez.';form.suggested_name.focus();return}if(!document.getElementById('consent').checked){msg.className='msg err';msg.textContent='Merci d’accepter l’enregistrement de votre proposition.';return}btn.disabled=true;btn.textContent='ENVOI…';try{const r=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({suggested_name:name,reason:'',display_name:form.display_name.value.trim(),website:form.website.value,consent:true})}),d=await r.json().catch(()=>({}));if(!r.ok||!d.ok)throw new Error(d.message||'Envoi impossible.');form.style.display='none';document.getElementById('after').classList.add('show')}catch(err){msg.className='msg err';msg.textContent=err.message||'Réessayez dans quelques instants.'}finally{btn.disabled=false;btn.textContent='ENVOYER MA PROPOSITION →'}});</script></body></html>
+<!doctype html>
+<html lang="fr-BE">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>Donnez-moi un prénom ! — Le Tour de Dour</title>
+  <meta name="description" content="Proposez le prénom du Canari du Tour de Dour en quelques secondes.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.letourdedour.com/canari/participer">
+  <meta property="og:title" content="🐤 Donnez-moi un prénom !">
+  <meta property="og:description" content="Quel prénom donneriez-vous au Canari du Tour de Dour ?">
+  <meta property="og:image" content="https://www.letourdedour.com/assets/mascotte-stade.webp">
+  <meta name="theme-color" content="#082638">
+  <style>
+    :root{--yellow:#f6c928;--blue:#123f5b;--ink:#082638;--paper:#fffdf3;--muted:#64727a;--line:#e8dfb7;--ok:#18784d;--err:#b62f38}
+    *{box-sizing:border-box}
+    html,body{margin:0;min-height:100%;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--ink)}
+    body{min-height:100dvh;background:#081e2c url('/assets/mascotte-stade.webp') center/cover fixed no-repeat}
+    body::before{content:"";position:fixed;inset:0;background:linear-gradient(145deg,rgba(8,38,56,.84),rgba(8,38,56,.55));backdrop-filter:blur(8px)}
+    .modal-layer{position:relative;z-index:1;min-height:100dvh;display:grid;place-items:center;padding:20px}
+    .dialog{position:relative;width:min(100%,430px);max-height:calc(100dvh - 40px);overflow:auto;background:var(--paper);border:1px solid rgba(255,255,255,.65);border-radius:26px;box-shadow:0 28px 90px rgba(0,0,0,.48);padding:22px;animation:pop .2s ease-out}
+    @keyframes pop{from{opacity:0;transform:translateY(12px) scale(.98)}to{opacity:1;transform:none}}
+    .close{position:absolute;right:14px;top:14px;width:38px;height:38px;display:grid;place-items:center;border:0;border-radius:50%;background:#eef0e8;color:var(--ink);font-size:24px;line-height:1;text-decoration:none;box-shadow:none}
+    .head{text-align:center;padding:0 38px 15px}
+    .mark{width:50px;height:50px;margin:auto;display:grid;place-items:center;border-radius:50%;background:var(--blue);color:var(--yellow);font-size:27px;border:3px solid rgba(246,201,40,.45)}
+    h1{margin:9px 0 3px;font-size:1.45rem;line-height:1.08}
+    .head p{margin:0;font-size:.82rem;font-weight:700;color:var(--blue)}
+    .field{margin-bottom:13px}
+    label{display:block;font-size:.9rem;font-weight:800;margin:0 0 6px}
+    .req{color:var(--err)}
+    .input{width:100%;height:52px;border:2px solid var(--line);border-radius:14px;background:#fff;color:var(--ink);padding:0 14px;font-size:17px;outline:none}
+    .input:focus{border-color:var(--yellow);box-shadow:0 0 0 4px rgba(246,201,40,.2)}
+    .hint{font-size:.7rem;color:var(--muted);margin-top:4px}
+    .consent{display:flex;align-items:flex-start;gap:9px;font-size:.72rem;line-height:1.35;color:var(--muted);font-weight:500;margin:4px 0 14px}
+    .consent input{width:18px;height:18px;margin:0;accent-color:var(--blue);flex:0 0 auto}
+    .submit{width:100%;min-height:52px;border:0;border-radius:14px;background:var(--blue);color:#fff;font-size:.9rem;font-weight:900;letter-spacing:.02em;cursor:pointer;box-shadow:0 8px 20px rgba(18,63,91,.18)}
+    .submit:disabled{opacity:.55}
+    .msg{text-align:center;min-height:18px;margin-top:9px;font-size:.78rem;font-weight:700}
+    .err{color:var(--err)}.ok{color:var(--ok)}
+    .count{text-align:center;color:var(--muted);font-size:.7rem;margin-top:7px}.count strong{color:var(--blue);font-size:.85rem}
+    .after{display:none;text-align:center;padding:16px 3px 8px}.after.show{display:block}.after .big{font-size:44px}.after h2{margin:3px 0 5px;color:var(--blue);font-size:1.45rem}.after p{margin:0;color:var(--muted);line-height:1.45}
+    .fine{text-align:center;color:#7d765d;font-size:.64rem;margin-top:10px}
+    .honey{position:absolute;left:-10000px}
+    @media(max-width:600px){.modal-layer{align-items:end;padding:0}.dialog{width:100%;max-height:92dvh;border-radius:24px 24px 0 0;padding:20px 18px calc(18px + env(safe-area-inset-bottom))}.head{padding-bottom:12px}}
+    @media(prefers-reduced-motion:reduce){.dialog{animation:none}}
+  </style>
+</head>
+<body>
+  <main class="modal-layer">
+    <section class="dialog" role="dialog" aria-modal="true" aria-labelledby="dialogTitle">
+      <a class="close" href="/canari" aria-label="Fermer le formulaire">×</a>
+      <header class="head"><div class="mark" aria-hidden="true">🐤</div><h1 id="dialogTitle">Donnez-moi un prénom !</h1><p>Le Canari du Tour de Dour compte sur vous.</p></header>
+      <form id="nameForm">
+        <div class="field"><label for="suggested_name">Prénom proposé <span class="req">*</span></label><input class="input" id="suggested_name" name="suggested_name" maxlength="40" required autocomplete="off" placeholder="Votre idée…"><div class="hint">40 caractères maximum</div></div>
+        <div class="field"><label for="display_name">Votre prénom <span class="hint">(facultatif)</span></label><input class="input" id="display_name" name="display_name" maxlength="80" autocomplete="name" placeholder="Comment vous appelez-vous ?"></div>
+        <div class="honey" aria-hidden="true"><input name="website" tabindex="-1" autocomplete="off"></div>
+        <label class="consent"><input type="checkbox" id="consent" required><span>J'accepte que ma proposition soit enregistrée et modérée dans le cadre du choix du prénom de la mascotte.</span></label>
+        <button class="submit" id="submitBtn" type="submit">ENVOYER MA PROPOSITION →</button>
+        <div class="msg" id="msg" role="status" aria-live="polite"></div>
+        <div class="count"><strong id="count">—</strong> propositions reçues</div>
+      </form>
+      <div class="after" id="after"><div class="big">🐤</div><h2>Merci !</h2><p>Votre proposition est enregistrée.<br>Dour choisira bientôt mon prénom.</p></div>
+      <div class="fine">Le Tour de Dour · Les propositions ne sont jamais publiées automatiquement.</div>
+    </section>
+  </main>
+  <script>
+    const API='/api/mascotte-suggestions',form=document.getElementById('nameForm'),msg=document.getElementById('msg'),count=document.getElementById('count'),btn=document.getElementById('submitBtn');
+    async function loadCount(){try{const r=await fetch(API,{cache:'no-store'}),d=await r.json();count.textContent=d.ok?Number(d.count)||0:'—'}catch(e){count.textContent='—'}}
+    loadCount();
+    form.addEventListener('submit',async e=>{e.preventDefault();msg.className='msg';msg.textContent='';const name=form.suggested_name.value.trim();if(!name){msg.className='msg err';msg.textContent='Indiquez le prénom que vous proposez.';form.suggested_name.focus();return}if(!document.getElementById('consent').checked){msg.className='msg err';msg.textContent='Merci d’accepter l’enregistrement de votre proposition.';return}btn.disabled=true;btn.textContent='ENVOI…';try{const r=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({suggested_name:name,reason:'',display_name:form.display_name.value.trim(),website:form.website.value,consent:true})}),d=await r.json().catch(()=>({}));if(!r.ok||!d.ok)throw new Error(d.message||'Envoi impossible.');form.style.display='none';document.getElementById('after').classList.add('show')}catch(err){msg.className='msg err';msg.textContent=err.message||'Réessayez dans quelques instants.'}finally{btn.disabled=false;btn.textContent='ENVOYER MA PROPOSITION →'}});
+  </script>
+</body>
+</html>
