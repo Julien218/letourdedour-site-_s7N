@@ -16,23 +16,22 @@
     :root{--yellow:#f6c928;--blue:#123f5b;--ink:#082638;--paper:#fffdf3;--muted:#64727a;--line:#e8dfb7;--ok:#18784d;--err:#b62f38}
     *{box-sizing:border-box}
     html,body{margin:0;min-height:100%;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--ink)}
-    body{min-height:100dvh;background:#081e2c url('/assets/canari-officiel.png') center 38%/cover fixed no-repeat}
-    body::before{content:"";position:fixed;inset:0;background:linear-gradient(145deg,rgba(8,38,56,.84),rgba(8,38,56,.55));backdrop-filter:blur(8px)}
-    .postits{position:fixed;z-index:2;inset:0;pointer-events:none}
-    .postit{position:absolute;min-width:92px;padding:18px 12px 13px;text-align:center;color:#17202a;background:#f6c928;box-shadow:0 12px 25px rgba(0,0,0,.28);font:800 1rem/1.05 "Comic Sans MS","Segoe Print",cursive;transform:rotate(-6deg)}
-    .postit::before{content:"";position:absolute;top:-7px;left:50%;width:34px;height:14px;transform:translateX(-50%);background:rgba(230,220,184,.72);box-shadow:0 1px 2px rgba(0,0,0,.15)}
-    .postit:nth-child(1){left:4%;top:10%;background:#f6c928}.postit:nth-child(2){right:5%;top:9%;background:#ef8297;transform:rotate(7deg)}
-    .postit:nth-child(3){left:7%;bottom:12%;background:#59b9d9;transform:rotate(5deg)}.postit:nth-child(4){right:6%;bottom:10%;background:#b8cf32;transform:rotate(-7deg)}
-    .postit:nth-child(5){left:18%;top:48%;background:#ef8297;transform:rotate(-10deg)}.postit:nth-child(6){right:18%;top:50%;background:#f2a92f;transform:rotate(9deg)}
-    .modal-layer{position:relative;z-index:3;min-height:100dvh;display:grid;place-items:center;padding:20px}
+    body{min-height:100dvh;background:#06131d}
+    body::before{content:"";position:fixed;inset:0;background:radial-gradient(circle at 50% 30%,rgba(17,81,108,.48),transparent 42rem),rgba(2,9,14,.72)}
+    .modal-layer{position:relative;z-index:1;min-height:100dvh;display:grid;place-items:center;padding:20px}
     .dialog{position:relative;width:min(100%,430px);max-height:calc(100dvh - 40px);overflow:auto;background:var(--paper);border:1px solid rgba(255,255,255,.65);border-radius:26px;box-shadow:0 28px 90px rgba(0,0,0,.48);padding:22px;animation:pop .2s ease-out}
     @keyframes pop{from{opacity:0;transform:translateY(12px) scale(.98)}to{opacity:1;transform:none}}
     .close{position:absolute;right:14px;top:14px;width:38px;height:38px;display:grid;place-items:center;border:0;border-radius:50%;background:#eef0e8;color:var(--ink);font-size:24px;line-height:1;text-decoration:none;box-shadow:none}
     .head{text-align:center;padding:0 38px 10px}
     h1{margin:9px 0 3px;font-size:1.45rem;line-height:1.08}
     .head p{margin:0;font-size:.82rem;font-weight:700;color:var(--blue)}
-    .mini-form-banner{height:142px;margin:0 -4px 12px;overflow:hidden;border-radius:18px;background:linear-gradient(145deg,#09283b,#0f4b66);box-shadow:inset 0 0 0 1px rgba(255,255,255,.12)}
-    .mini-form-banner img{display:block;width:100%;height:100%;object-fit:cover;object-position:center 15%;filter:drop-shadow(0 8px 10px rgba(0,0,0,.28))}
+    .mini-form-banner{position:relative;height:142px;margin:0 -4px 12px;overflow:hidden;border-radius:18px;background:linear-gradient(145deg,#09283b,#0f4b66);box-shadow:inset 0 0 0 1px rgba(255,255,255,.12)}
+    .mini-avatar{position:absolute;bottom:0;width:82px;height:136px;background-image:url('/assets/canari-mini-moi.png');background-repeat:no-repeat;background-size:520px 347px;filter:drop-shadow(0 7px 8px rgba(0,0,0,.32))}
+    .mini-avatar:nth-child(1){left:-5px;bottom:-9px;background-position:-48px 1px;transform:rotate(-8deg) scale(.92)}
+    .mini-avatar:nth-child(2){left:18%;bottom:11px;background-position:-194px 1px;transform:rotate(5deg) scale(.86)}
+    .mini-avatar:nth-child(3){left:39%;bottom:-13px;background-position:-342px -25px;transform:rotate(-3deg) scale(1.05);z-index:2}
+    .mini-avatar:nth-child(4){left:60%;bottom:14px;background-position:-99px -171px;transform:rotate(7deg) scale(.86)}
+    .mini-avatar:nth-child(5){right:-7px;bottom:-8px;background-position:-303px -173px;transform:rotate(9deg) scale(.94)}
     .field{margin-bottom:13px}
     label{display:block;font-size:.9rem;font-weight:800;margin:0 0 6px}
     .req{color:var(--err)}
@@ -49,20 +48,18 @@
     .after{display:none;text-align:center;padding:16px 3px 8px}.after.show{display:block}.after .big{font-size:44px}.after h2{margin:3px 0 5px;color:var(--blue);font-size:1.45rem}.after p{margin:0;color:var(--muted);line-height:1.45}
     .fine{text-align:center;color:#7d765d;font-size:.64rem;margin-top:10px}
     .honey{position:absolute;left:-10000px}
-    @media(max-width:900px){.postit{min-width:72px;padding:14px 8px 10px;font-size:.78rem}.postit:nth-child(5),.postit:nth-child(6){display:none}}
-    @media(max-width:600px){body{background-position:center top}.postit:nth-child(1){left:3%;top:8%}.postit:nth-child(2){right:3%;top:14%}.postit:nth-child(3),.postit:nth-child(4){display:none}.modal-layer{place-items:center;padding:14px}.dialog{width:min(100%,430px);max-height:calc(100dvh - 28px);border-radius:24px;padding:20px 18px calc(18px + env(safe-area-inset-bottom))}.head{padding-bottom:10px}.mini-form-banner{height:124px}}
+    @media(max-width:600px){.modal-layer{place-items:center;padding:14px}.dialog{width:min(100%,430px);max-height:calc(100dvh - 28px);border-radius:24px;padding:20px 18px calc(18px + env(safe-area-inset-bottom))}.head{padding-bottom:10px}.mini-form-banner{height:124px}}
     @media(prefers-reduced-motion:reduce){.dialog{animation:none}}
-    html.embed body{background:transparent}html.embed body::before,html.embed .postits,html.embed .close{display:none}
+    html.embed body{background:transparent}html.embed body::before,html.embed .close{display:none}
     html.embed .modal-layer{min-height:auto;padding:0}html.embed .dialog{width:100%;max-height:none;border-radius:22px;box-shadow:none;animation:none}
   </style>
 </head>
 <body>
-  <div class="postits" aria-hidden="true"><span class="postit">COCO ☺</span><span class="postit">PÉPITO ♛</span><span class="postit">LÉO ★</span><span class="postit">PLUME ✦</span><span class="postit">DOURY ?</span><span class="postit">TON IDÉE ♥</span></div>
   <main class="modal-layer">
     <section class="dialog" role="dialog" aria-modal="true" aria-labelledby="dialogTitle">
       <a class="close" href="/canari" aria-label="Fermer le formulaire">×</a>
       <header class="head"><h1 id="dialogTitle">Donnez-moi un prénom !</h1><p>Moi aussi, je suis rentré à l’école…<br>mais je n’ai pas encore de prénom !</p></header>
-      <div class="mini-form-banner" aria-hidden="true"><img src="/assets/canari-mini-moi.png" alt=""></div>
+      <div class="mini-form-banner" aria-hidden="true"><span class="mini-avatar"></span><span class="mini-avatar"></span><span class="mini-avatar"></span><span class="mini-avatar"></span><span class="mini-avatar"></span></div>
       <form id="nameForm">
         <div class="field"><label for="suggested_name">Prénom proposé <span class="req">*</span></label><input class="input" id="suggested_name" name="suggested_name" maxlength="40" required autocomplete="off" placeholder="Votre idée…"><div class="hint">40 caractères maximum</div></div>
         <div class="field"><label for="display_name">Votre prénom <span class="hint">(facultatif)</span></label><input class="input" id="display_name" name="display_name" maxlength="80" autocomplete="name" placeholder="Comment vous appelez-vous ?"></div>
