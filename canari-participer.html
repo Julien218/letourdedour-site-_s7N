@@ -11,13 +11,13 @@
   <meta property="og:description" content="Quel prénom donneriez-vous au Canari du Tour de Dour ?">
   <meta property="og:image" content="https://www.letourdedour.com/assets/mascotte-stade.webp">
   <meta name="theme-color" content="#082638">
+  <script>if(new URLSearchParams(location.search).get('embed')==='1')document.documentElement.classList.add('embed')</script>
   <style>
     :root{--yellow:#f6c928;--blue:#123f5b;--ink:#082638;--paper:#fffdf3;--muted:#64727a;--line:#e8dfb7;--ok:#18784d;--err:#b62f38}
     *{box-sizing:border-box}
     html,body{margin:0;min-height:100%;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--ink)}
     body{min-height:100dvh;background:#081e2c url('/assets/canari-officiel.png') center 38%/cover fixed no-repeat}
     body::before{content:"";position:fixed;inset:0;background:linear-gradient(145deg,rgba(8,38,56,.84),rgba(8,38,56,.55));backdrop-filter:blur(8px)}
-    .mini-scene{position:fixed;z-index:1;inset:0;pointer-events:none;background:url('/assets/canari-mini-moi.png') center/1100px auto no-repeat;filter:drop-shadow(0 14px 24px rgba(0,0,0,.3))}
     .postits{position:fixed;z-index:2;inset:0;pointer-events:none}
     .postit{position:absolute;min-width:92px;padding:18px 12px 13px;text-align:center;color:#17202a;background:#f6c928;box-shadow:0 12px 25px rgba(0,0,0,.28);font:800 1rem/1.05 "Comic Sans MS","Segoe Print",cursive;transform:rotate(-6deg)}
     .postit::before{content:"";position:absolute;top:-7px;left:50%;width:34px;height:14px;transform:translateX(-50%);background:rgba(230,220,184,.72);box-shadow:0 1px 2px rgba(0,0,0,.15)}
@@ -28,10 +28,11 @@
     .dialog{position:relative;width:min(100%,430px);max-height:calc(100dvh - 40px);overflow:auto;background:var(--paper);border:1px solid rgba(255,255,255,.65);border-radius:26px;box-shadow:0 28px 90px rgba(0,0,0,.48);padding:22px;animation:pop .2s ease-out}
     @keyframes pop{from{opacity:0;transform:translateY(12px) scale(.98)}to{opacity:1;transform:none}}
     .close{position:absolute;right:14px;top:14px;width:38px;height:38px;display:grid;place-items:center;border:0;border-radius:50%;background:#eef0e8;color:var(--ink);font-size:24px;line-height:1;text-decoration:none;box-shadow:none}
-    .head{text-align:center;padding:0 38px 15px}
-    .mark{width:50px;height:50px;margin:auto;display:grid;place-items:center;border-radius:50%;background:var(--blue);color:var(--yellow);font-size:27px;border:3px solid rgba(246,201,40,.45)}
+    .head{text-align:center;padding:0 38px 10px}
     h1{margin:9px 0 3px;font-size:1.45rem;line-height:1.08}
     .head p{margin:0;font-size:.82rem;font-weight:700;color:var(--blue)}
+    .mini-form-banner{height:142px;margin:0 -4px 12px;overflow:hidden;border-radius:18px;background:linear-gradient(145deg,#09283b,#0f4b66);box-shadow:inset 0 0 0 1px rgba(255,255,255,.12)}
+    .mini-form-banner img{display:block;width:100%;height:100%;object-fit:cover;object-position:center 15%;filter:drop-shadow(0 8px 10px rgba(0,0,0,.28))}
     .field{margin-bottom:13px}
     label{display:block;font-size:.9rem;font-weight:800;margin:0 0 6px}
     .req{color:var(--err)}
@@ -48,18 +49,20 @@
     .after{display:none;text-align:center;padding:16px 3px 8px}.after.show{display:block}.after .big{font-size:44px}.after h2{margin:3px 0 5px;color:var(--blue);font-size:1.45rem}.after p{margin:0;color:var(--muted);line-height:1.45}
     .fine{text-align:center;color:#7d765d;font-size:.64rem;margin-top:10px}
     .honey{position:absolute;left:-10000px}
-    @media(max-width:900px){.mini-scene{background-size:860px auto;background-position:center 4vh}.postit{min-width:72px;padding:14px 8px 10px;font-size:.78rem}.postit:nth-child(5),.postit:nth-child(6){display:none}}
-    @media(max-width:600px){body{background-position:center top}.mini-scene{background-size:720px auto;background-position:center -2vh;opacity:.9}.postit:nth-child(1){left:3%;top:8%}.postit:nth-child(2){right:3%;top:14%}.postit:nth-child(3),.postit:nth-child(4){display:none}.modal-layer{place-items:center;padding:14px}.dialog{width:min(100%,430px);max-height:calc(100dvh - 28px);border-radius:24px;padding:20px 18px calc(18px + env(safe-area-inset-bottom))}.head{padding-bottom:12px}}
+    @media(max-width:900px){.postit{min-width:72px;padding:14px 8px 10px;font-size:.78rem}.postit:nth-child(5),.postit:nth-child(6){display:none}}
+    @media(max-width:600px){body{background-position:center top}.postit:nth-child(1){left:3%;top:8%}.postit:nth-child(2){right:3%;top:14%}.postit:nth-child(3),.postit:nth-child(4){display:none}.modal-layer{place-items:center;padding:14px}.dialog{width:min(100%,430px);max-height:calc(100dvh - 28px);border-radius:24px;padding:20px 18px calc(18px + env(safe-area-inset-bottom))}.head{padding-bottom:10px}.mini-form-banner{height:124px}}
     @media(prefers-reduced-motion:reduce){.dialog{animation:none}}
+    html.embed body{background:transparent}html.embed body::before,html.embed .postits,html.embed .close{display:none}
+    html.embed .modal-layer{min-height:auto;padding:0}html.embed .dialog{width:100%;max-height:none;border-radius:22px;box-shadow:none;animation:none}
   </style>
 </head>
 <body>
-  <div class="mini-scene" aria-hidden="true"></div>
   <div class="postits" aria-hidden="true"><span class="postit">COCO ☺</span><span class="postit">PÉPITO ♛</span><span class="postit">LÉO ★</span><span class="postit">PLUME ✦</span><span class="postit">DOURY ?</span><span class="postit">TON IDÉE ♥</span></div>
   <main class="modal-layer">
     <section class="dialog" role="dialog" aria-modal="true" aria-labelledby="dialogTitle">
       <a class="close" href="/canari" aria-label="Fermer le formulaire">×</a>
-      <header class="head"><div class="mark" aria-hidden="true">🐤</div><h1 id="dialogTitle">Donnez-moi un prénom !</h1><p>Moi aussi, je suis rentré à l’école…<br>mais je n’ai pas encore de prénom !</p></header>
+      <header class="head"><h1 id="dialogTitle">Donnez-moi un prénom !</h1><p>Moi aussi, je suis rentré à l’école…<br>mais je n’ai pas encore de prénom !</p></header>
+      <div class="mini-form-banner" aria-hidden="true"><img src="/assets/canari-mini-moi.png" alt=""></div>
       <form id="nameForm">
         <div class="field"><label for="suggested_name">Prénom proposé <span class="req">*</span></label><input class="input" id="suggested_name" name="suggested_name" maxlength="40" required autocomplete="off" placeholder="Votre idée…"><div class="hint">40 caractères maximum</div></div>
         <div class="field"><label for="display_name">Votre prénom <span class="hint">(facultatif)</span></label><input class="input" id="display_name" name="display_name" maxlength="80" autocomplete="name" placeholder="Comment vous appelez-vous ?"></div>
