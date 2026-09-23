@@ -1,0 +1,67 @@
+{
+  "schemaVersion": "1.0",
+  "brand": "Le Tour de Dour",
+  "status": "production",
+  "locale": "fr-BE",
+  "lastAligned": "2026-09-23",
+  "repository": {
+    "fullName": "Julien218/letourdedour-site-_s7N",
+    "productionBranch": "main"
+  },
+  "canonicalSources": {
+    "bible": "brand/BRAND_ADN.md",
+    "runtime": "tour-de-dour.html"
+  },
+  "palette": {
+    "orange": "#D47A2C",
+    "amber": "#F0C982",
+    "blue": "#1E6FA5",
+    "night": "#0D1117",
+    "nightMid": "#161B22",
+    "cream": "#F5F1E8",
+    "gold": "#C9A227"
+  },
+  "typography": {
+    "primary": "Montserrat",
+    "accentScript": "Great Vibes"
+  },
+  "assets": {
+    "mainLogo": {
+      "type": "external-runtime-reference",
+      "localMaster": false
+    },
+    "mascot": {
+      "official": "assets/canari-officiel.png",
+      "miniMoi": "assets/canari-mini-moi.png",
+      "scope": "mascot-only"
+    },
+    "archives": [
+      "assets/pepite-canari-origine.webp",
+      "assets/pepite-chevalement.webp",
+      "assets/pepite-planche-creation.webp",
+      "assets/pepite-terril.webp"
+    ]
+  },
+  "agentPolicy": {
+    "mode": "fail-closed",
+    "readOrder": [
+      "brand/brand.manifest.json",
+      "brand/BRAND_ADN.md",
+      "tour-de-dour.html"
+    ],
+    "forbidden": [
+      "use-mascot-as-main-logo",
+      "use-archive-as-logo",
+      "mix-olivier-trevis-identity",
+      "mix-miss-mister-identity",
+      "generate-main-logo"
+    ],
+    "qualityGate": [
+      "tour-de-dour-scope-confirmed",
+      "canonical-palette-used",
+      "asset-role-respected",
+      "local-facts-confirmed",
+      "no-cross-brand-contamination"
+    ]
+  }
+}
