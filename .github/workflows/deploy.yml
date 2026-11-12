@@ -1,34 +1,28 @@
-name: 🚀 Deploy — Le Tour de Dour (Railway)
+name: CI — Le Tour de Dour (IONOS)
 
 on:
   push:
     branches: [main]
+  pull_request:
+    branches: [main]
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
-  deploy:
-    name: 🚀 Deploy to Railway
+  linux-startup:
     runs-on: ubuntu-latest
     steps:
-      - name: 📥 Checkout
-        uses: actions/checkout@v4
-
-      - name: 🚀 Install Railway CLI
-        run: npm install -g @railway/cli
-
-      - name: 🚀 Deploy to Railway
-        # Attend la fin du build : un workflow vert signifie désormais que
-        # la nouvelle version est réellement disponible, pas seulement envoyée.
-        run: railway up --ci --service letourdedour-site
-        env:
-          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
-
-      - name: 🔎 Verify Railway target
+      - uses: actions/checkout@v4
+      - name: Build the Linux image
+        run: docker build -t tourdedour-ci .
+      - name: Verify startup and public routes
         run: |
-          railway status --json
-          railway domain list --service letourdedour-site --json
-        env:
-          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
-
-      - name: ✅ Done
-        run: echo "✨ letourdedour.com déployé — JS-Innov.IA"
+          docker run -d --name tourdedour-ci -p 127.0.0.1:18080:8080 tourdedour-ci
+          curl --fail --retry 10 --retry-connrefused --retry-delay 1 http://127.0.0.1:18080/
+          curl --fail http://127.0.0.1:18080/tour-de-dour
+          curl --fail http://127.0.0.1:18080/mascotte
+      - name: Stop the test container
+        if: always()
+        run: docker rm -f tourdedour-ci || true
